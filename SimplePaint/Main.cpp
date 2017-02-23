@@ -92,12 +92,12 @@ void createMenu(void)
 int main(int argc, char** argv)
 {
 	instance = new paint();
-	std::cerr << controlsMessage;
+	std::cerr << CONTROLS_MESSAGE;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(screenWidth, screenHeight);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow(windowName);
+	glutCreateWindow(WINDOW_NAME);
 
 	glutDisplayFunc(redrawCallback);
 	glutMouseFunc(mouseClickCallback);

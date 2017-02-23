@@ -54,12 +54,12 @@ private:
 	//Modes of the painting
 	enum
 	{
-		MODE_POINTS = 0,
-		MODE_PEN,
-		MODE_LINES,
-		MODE_CIRCLES,
-		MODE_RECTANGLES,
-		MODE_FLOODFILL,
+		POINT_MODE = 0,
+		PEN_MODE,
+		LINE_MODE,
+		CIRCLE_MODE,
+		RECTANGLE_MODE,
+		FLOODFILL_MODE,
 	};
 
 	int currentMode;
@@ -77,8 +77,6 @@ private:
 	RGBColor currentDrawColor;
 };
 
-//Window name constant
-extern const char *windowName;
 //Mouse holding button variable
 extern bool mouseIsPressed;
 //Current pixel size variable

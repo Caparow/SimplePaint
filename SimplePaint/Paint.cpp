@@ -2,9 +2,6 @@
 
 using namespace std;
 
-const int  MAX_PIXEL_SIZE = 10;
-const int  MIN_PIXEL_SIZE = 1;
-const char *windowName = "Simple Paint";
 bool mouseIsPressed = false;
 bool stickingMode = false;
 int pixelSize = 2;
@@ -44,10 +41,12 @@ bool paint::colorsAreEqual(RGBColor color1, RGBColor color2)
 
 void paint::drawLine(pixelPoint start, pixelPoint end)
 {
-	int dx = abs(end.x - start.x), sx = start.x < end.x ? 1 : -1;
-	int dy = -abs(end.y - start.y), sy = start.y < end.y ? 1 : -1;
+	int dx = abs(end.x - start.x); 
+	int dy = -abs(end.y - start.y); 
+	int sx = start.x < end.x ? 1 : -1;
+	int sy = start.y < end.y ? 1 : -1; //change by start and end positions
 	int err = dx + dy, e2; //Error value e_xy
-	bool needToDraw = true;
+
 	do   //Loop for drawing 
 	{
 		setPixel(start, currentDrawColor);
@@ -62,7 +61,7 @@ void paint::drawLine(pixelPoint start, pixelPoint end)
 			err += dx;
 			start.y += sy;
 		}
-	} while (start.x == end.x && start.y == end.y);
+	} while (start.x != end.x && start.y != end.y);
 	glFlush();
 	cerr << "line drawn." << endl;
 }
@@ -174,16 +173,16 @@ void paint::drawCircle(pixelPoint center, int radius)
 
 void paint::mouseClickListener(pixelPoint point)
 {
-	if (currentMode == MODE_PEN && mouseIsPressed)
+	if (currentMode == PEN_MODE && mouseIsPressed)
 		setPixel(point, currentDrawColor);
 	else if (!startDrawing && !mouseIsPressed)
 		switch (currentMode)
 		{
-		case MODE_POINTS:
+		case POINT_MODE:
 			setPixel(point, currentDrawColor);
 			cerr << "pixel drawn." << endl;
 			break;
-		case MODE_FLOODFILL:
+		case FLOODFILL_MODE:
 			floodFill(point, currentDrawColor);
 			cerr << "Floodfill done." << endl;
 			break;
@@ -196,11 +195,11 @@ void paint::mouseClickListener(pixelPoint point)
 	else if (!mouseIsPressed | stickingMode)
 		switch (currentMode)
 		{
-		case MODE_LINES:
+		case LINE_MODE:
 			drawLine(start, point);
 			startDrawing = false;
 			break; 
-		case MODE_CIRCLES:
+		case CIRCLE_MODE:
 		{
 			int radius = sqrt((point.x - start.x) * (point.x - start.x) +
 							  (point.y - start.y) * (point.y - start.y));
@@ -208,7 +207,7 @@ void paint::mouseClickListener(pixelPoint point)
 			startDrawing = false;
 			break;
 		}
-		case MODE_RECTANGLES:
+		case RECTANGLE_MODE:
 			drawRectangle(start, point);
 			startDrawing = false;
 			break;
@@ -263,27 +262,27 @@ void paint::keyPressListener(unsigned char key, int x, int y)
 	{
 	case 'p':
 		cerr << "Point mode\n";
-		currentMode = MODE_POINTS;
+		currentMode = POINT_MODE;
 		break;	
 	case 'o':
 		cerr << "Pen mode\n";
-		currentMode = MODE_PEN;
+		currentMode = PEN_MODE;
 		break;
 	case 'l':
 		cerr << "Line mode\n";
-		currentMode = MODE_LINES;
+		currentMode = LINE_MODE;
 		break;	
 	case 'c':
 		cerr << "Circle mode\n";
-		currentMode = MODE_CIRCLES;
+		currentMode = CIRCLE_MODE;
 		break;	
 	case 'r':
 		cerr << "Rectangle mode\n";
-		currentMode = MODE_RECTANGLES;
+		currentMode = RECTANGLE_MODE;
 		break;	
 	case 'f':
 		cerr << "Floodfill mode\n";
-		currentMode = MODE_FLOODFILL;
+		currentMode = FLOODFILL_MODE;
 		break;	
 	case '=': case '-':
 		changePixelSize(key);
@@ -310,27 +309,27 @@ void paint::mainMenuClickListener(int value)
 	{
 	case 1:
 		cerr << "Point mode\n";
-		currentMode = MODE_POINTS;
+		currentMode = POINT_MODE;
 		break;
 	case 2:
 		cerr << "Pen mode\n";
-		currentMode = MODE_PEN;
+		currentMode = PEN_MODE;
 		break;
 	case 3:
 		cerr << "Line mode\n";
-		currentMode = MODE_LINES;
+		currentMode = LINE_MODE;
 		break;
 	case 4:
 		cerr << "Circle mode\n";
-		currentMode = MODE_CIRCLES;
+		currentMode = CIRCLE_MODE;
 		break;
 	case 5:
 		cerr << "Rectangle mode\n";
-		currentMode = MODE_RECTANGLES;
+		currentMode = RECTANGLE_MODE;
 		break;
 	case 6:
 		cerr << "Floodfill mode\n";
-		currentMode = MODE_FLOODFILL;
+		currentMode = FLOODFILL_MODE;
 		break;
 	case 8:
 		changePixelSize('-');
@@ -374,7 +373,7 @@ void paint::colorsMenuClickListener(int value)
 
 paint::paint()
 {
-	currentMode = MODE_POINTS;
+	currentMode = POINT_MODE;
 	start.x = 0;
 	start.y = 0;
 	currentDrawColor = BLACK;

@@ -35,24 +35,29 @@ public:
 static int screenHeight = 480;
 static int screenWidth = 640;
 
+
 // GLOBAL constants:
-static const char *controlsMessage = "mypaint Controls:\n"
-"  Modes:\n"
-"    'P' points \n"
-"	 'O' pen \n"
-"    'L' lines \n"
-"    'C' circles \n"
-"    'R' rectangles\n"
-"    'F' floodfill\n"
-"  \n"
-"  Change color:\n"
-"    [0-9]\n"
-"  \n"
-"  Other Controls:\n"
-"    'X' clear screen\n"
-"    '-' decrease brush size\n"
-"	 '+' increase brush size"
-"    'Q' quit\n\n";
+static const char *CONTROLS_MESSAGE = "SimplePaint Controls:\n"
+									  "  Mode Options:\n"
+									  "    'P' points \n"
+									  "	   'O' pen \n"
+								      "    'L' lines \n"
+									  "    'C' circles \n"
+									  "    'R' rectangles\n"
+									  "    'F' floodfill\n"
+									  "  \n"
+								      "  Color Options:\n"
+									  "    [0-9]\n"
+									  "  \n"
+									  "  Other Controls:\n"
+								      "    '-' decrease brush size\n"
+									  "	   '+' increase brush size"
+									  "    'X' clear screen\n"
+									  "    'Q' quit\n\n";
+
+static const int  MAX_PIXEL_SIZE = 10;
+static const int  MIN_PIXEL_SIZE = 1;
+static const char *WINDOW_NAME = "Simple Paint";
 
 // Setup simple colors
 static const RGBColor WHITE(1.0, 1.0, 1.0);
